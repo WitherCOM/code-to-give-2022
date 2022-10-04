@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('birthday');
             $table->string('email');
             $table->string('tel');
-            $table->string('other');
+            $table->string('other')->default('');
         });
     }
 

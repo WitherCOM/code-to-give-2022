@@ -15,18 +15,10 @@ return new class extends Migration
     {
         Schema::table('english_tests',function(Blueprint $table){
             $table->id();
+            $table->string('name');
             $table->enum('level',['ELEMENTARY','INTERMEDIATE','UPPER-INTERMEDIATE']);
             $table->string('text_to_read');
-            $table->json('question_1'); // Question + 3 options
-            $table->json('question_2');
-            $table->json('question_3');
-            $table->json('question_4');
-            $table->json('question_5');
-            $table->json('question_6');
-            $table->json('question_7');
-            $table->json('question_8');
-            $table->json('question_9');
-            $table->json('question_10');
+            $table->json('questions');
             $table->string('essay_title');
             $table->timestamps();
         });
