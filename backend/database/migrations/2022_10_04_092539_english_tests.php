@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('english_tests',function(Blueprint $table){
+        Schema::create('english_tests',function(Blueprint $table){
             $table->id();
             $table->string('name');
             $table->enum('level',['ELEMENTARY','INTERMEDIATE','UPPER-INTERMEDIATE']);
