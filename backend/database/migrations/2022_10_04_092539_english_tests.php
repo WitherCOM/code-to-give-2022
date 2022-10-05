@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('english_tests',function(Blueprint $table){
             $table->id();
             $table->string('name');
+            $table->integer('limit');
             $table->enum('level',['ELEMENTARY','INTERMEDIATE','UPPER-INTERMEDIATE']);
             $table->string('text_to_read');
             $table->json('questions');

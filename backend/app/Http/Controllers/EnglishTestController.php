@@ -15,6 +15,7 @@ class EnglishTestController extends Controller
         $this->validate($request,[
             "name" => "required",
             "level" => "required|enum:ELEMENTARY,INTERMEDIATE,UPPER-INTERMEDIATE",
+            "limit" => 'required|number|min:1',
             "text_to_read" => "required",
             "essay_title" => "required",
             "questions" => "required|array|size:10",
@@ -25,10 +26,11 @@ class EnglishTestController extends Controller
             "questions.*.answer_3" => "required",
         ]);
 
-        DB::insert("INSERT INTO english_tests (name,level,text_to_read,essay_title,questions,created_at,updated_at)
-                            VALUES (?,?,?,?,?,:now,:now);",
+        DB::insert("INSERT INTO english_tests (name,level,limit,text_to_read,essay_title,questions,created_at,updated_at)
+                            VALUES (?,?,?,?,?,?,:now,:now);",
             [
-               $request->input('name'),$request->input('level'),$request->input('text_to_read'),
+               $request->input('name'),$request->input('level'),$request->input('limit'),
+                $request->input('text_to_read'),
                 $request->input('essay_title'),$request->input('questions'),'now' => Carbon::now()
         ]);
 
@@ -54,6 +56,7 @@ class EnglishTestController extends Controller
         $this->validate($request,[
             "name" => "required",
             "level" => "required|enum:ELEMENTARY,INTERMEDIATE,UPPER-INTERMEDIATE",
+            "limit" => 'required|number|min:1',
             "text_to_read" => "required",
             "essay_title" => "required",
             "questions" => "required|array|size:10",
@@ -65,7 +68,8 @@ class EnglishTestController extends Controller
         ]);
 
         $state = DB::update('UPDATE english_tests SET name = ?,level=?,text_to_read = ?,essay_title=?,questions=?,updated_at=? WHERE id = ?;',[
-            $request->input('name'),$request->input('level'),$request->input('text_to_read'),
+            $request->input('name'),$request->input('level'),$request->input('limit'),
+            $request->input('text_to_read'),
             $request->input('essay_title'),$request->input('questions'),Carbon::now(),$id
         ]);
         if($state)

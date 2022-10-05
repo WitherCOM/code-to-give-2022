@@ -10,7 +10,7 @@ class CustomerController extends Controller
 {
     public function create(Request $request) :JsonResponse
     {
-        $this->validate($request, [
+        $validated = $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email',
             'birthday' => 'required|date',
@@ -18,25 +18,22 @@ class CustomerController extends Controller
             'other' => 'nullable'
         ]);
 
-        DB::insert('insert into customers (name,email,birthday,tel,other) VALUES (?,?,?,?,?);',[
-            $request->input('name'),
-            $request->input('email'),
-            $request->input('birthday'),
-            $request->input('tel'),
-            $request->input('other'),
-        ]);
+        $id = DB::table('customers')->insertGetId($validated);
 
-        return new JsonResponse(['message' => __('Successfully created customer!')]);
+        return new JsonResponse(['message' => __('Successfully created customer!'),'customer_id' => $id]);
     }
 
     public function read($id = null): JsonResponse
     {
         if(is_null($id))
         {
-            $customers = DB::select('select * from customers;');
+            $customers = DB::select('select customer.*,links.test_id,links.test_type,links.stated_at,links.finished_at from customers
+                                            inner join links on links.customer_id = customer.id;');
             return new JsonResponse(['data' => $customers]);
         }
-        $customers = DB::select('select * from customers where id = ?;',[$id]);
+        $customers = DB::select('select customer.*,links.test_id,links.test_type,links.stated_at,links.finished_at from customers
+                                            inner join links on links.customer_id = customer.id
+                                            where customers.id = ?;',[$id]);
         if(!empty($customers))
             return new JsonResponse(['data' => $customers[0]]);
 

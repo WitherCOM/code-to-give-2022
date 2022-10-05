@@ -18,6 +18,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email');
+            $table->boolean('is_email_confirmed')->default(false);
+            $table->string('confirm_token');
             $table->string('password_hash');
         });
     }

@@ -16,6 +16,7 @@
 //Auth Controller
 $router->post('/api/login',['uses' => 'AuthController@login']);
 $router->post('/api/register',['uses' => 'AuthController@register']);
+$router->get('/api/confirm/{token}',['uses' => 'AuthController@confirm']);
 
 $router->get('/', ['middleware' => 'auth',function () use ($router) {
     return $router->app->version();
@@ -26,16 +27,24 @@ $router->group(['middleware' => 'auth','prefix' => 'api'],function() use ($route
 
     //Customers
     $router->post('/customer',['uses' => 'CustomerController@create']);
-    $router->get('/customer',['uses' => 'CustomerController@read']);
-    $router->get('/customer/{id}',['uses' => 'CustomerController@read']);
+    $router->get('/customer[/{id}]',['uses' => 'CustomerController@read']);
     $router->patch('/customer/{id}',['uses' => 'CustomerController@update']);
     $router->delete('/customer/{id}',['uses' => 'CustomerController@delete']);
 
-    //English test
-    $router->post('/english',['uses' => 'EnglishTestController@create']);
-    $router->get('/english',['uses' => 'EnglishTestController@read']);
-    $router->get('/english/{id}',['uses' => 'EnglishTestController@read']);
-    $router->patch('/english/{id}',['uses' => 'EnglishTestController@update']);
-    $router->delete('/english/{id}',['uses' => 'EnglishTestController@delete']);
+    //Links
+    $router->post('/link',['uses'=>'LinkController@create']);
+    $router->get('/link/{id}',['uses'=>'LinkController@read']);
+    $router->delete('/link/{id}',['uses'=>'LinkController@delete']);
+
+
+    //English tests
+    $router->post('/english_test',['uses' => 'EnglishTestController@create']);
+    $router->get('/english_test[/{id}]',['uses' => 'EnglishTestController@read']);
+    $router->patch('/english_test/{id}',['uses' => 'EnglishTestController@update']);
+    $router->delete('/english_test/{id}',['uses' => 'EnglishTestController@delete']);
+
+    //English answers
+    $router->post('/english_answer',['uses' => 'EnglishAnswerController@create']);
+    $router->get('/english_answer/{id}', ['uses' => 'EnglishAnswerController@read']);
 
 });
