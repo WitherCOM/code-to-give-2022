@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('english_answers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('link_id')->references('id')->on('links')->onDelete('cascade');
+            $table->foreignUuid('link_id');
             $table->json('answers');
             $table->string('essay',2000);
         });
