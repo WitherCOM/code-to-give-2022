@@ -14,9 +14,22 @@
   - `/api/register` `POST`
   - `/api/confirm/{token}` `GET`
 - LinkController
+  - `/api/link` `POST`
+  - `/api/link/{id}` `GET`
+  - `/api/link/{id}` `DELETE`
 - CustomerController
+  - `/api/customer` `POST`
+  - `/api/customer[/{id}]` `GET`
+  - `/api/customer/{id}` `PATCH`
+  - `/api/customer/{id}` `DELETE`
 - EnglishTestController
+  - `/api/english_test` `POST`
+  - `/api/english_test[/{id}]` `GET`
+  - `/api/english_test/{id}` `PATCH`
+  - `/api/english_test/{id}` `DELETE`
 - EnglishFillController
+  - `/api/english_answer` `POST`
+  - `/api/english_answer/{id}` `GET`
 
 # Basic concept (work flow)
 - As an admin user
