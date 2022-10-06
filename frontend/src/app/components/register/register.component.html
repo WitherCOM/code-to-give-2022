@@ -1,0 +1,27 @@
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="m-5 p-3 border border-secondary border-1 rounded">
+  <div class="form-group">
+    <label for="name">Enter your name</label>
+    <input class="form-control"
+           formControlName="name"
+           id="name" name="name"
+           type="text">
+  </div>
+  <div class="form-group">
+    <label for="email">Enter your email</label>
+    <input class="form-control"
+           formControlName="email"
+           id="email"
+           name="email"
+           type="text">
+  </div>
+  <div class="form-group">
+    <label for="password">Enter your password</label>
+    <input class="form-control"
+           formControlName="password"
+           id="password"
+           name="password"
+           type="password">
+  </div>
+  <button type="submit" class="form-control btn btn-primary mt-2" [disabled]="registerForm.invalid">Register</button>
+  <div *ngIf="errorMsg" class="form-control bg-black text-light mt-1">{{ errorMsg }}</div>
+</form>

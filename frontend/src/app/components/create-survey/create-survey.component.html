@@ -1,0 +1,43 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="taskForm" class="m-5 p-3 border border-secondary border-1 rounded">
+  <div class="form-group">
+    <label for="name">Enter the name of the english test</label>
+    <input class="form-control"
+           formControlName="name"
+           id="name"
+           name="name"
+           type="text">
+  </div>
+  <div class="form-group">
+    <label for="essay_title">Enter the title of the essay</label>
+    <input class="form-control"
+           formControlName="essay_title"
+           id="essay_title"
+           name="essay_title"
+           type="text">
+  </div>
+  <div class="form-group">
+    <label for="limit">Enter a limit</label>
+    <input class="form-control"
+           formControlName="limit"
+           id="limit"
+           name="limit"
+           type="text">
+  </div>
+  <div *ngFor="let n of [].constructor(10); let i = index" class="form-group">
+    <label [for]="'question' + i">Enter a question</label>
+    <input [formControlName]="'question' + i"
+           [id]="'question' + i"
+           [name]="'question' + i"
+           class="form-control"
+           type="text">
+  </div>
+  <div class="form-group">
+    <label for="text_to_read">Enter the text to read</label>
+    <input class="form-control"
+           formControlName="text_to_read"
+           id="text_to_read"
+           name="text_to_read"
+           type="text">
+  </div>
+  <button [disabled]="taskForm.invalid" class="form-control btn btn-primary mt-2" type="submit">Add task</button>
+</form>

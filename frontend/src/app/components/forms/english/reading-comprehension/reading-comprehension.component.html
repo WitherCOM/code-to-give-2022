@@ -1,0 +1,11 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="testForm" class="m-5 p-3 border border-secondary border-1 rounded">
+  <div class="form-group">
+    {{ task.text_to_read }}
+  </div>
+  <div class="form-group mb-2" *ngFor="let question of task.questions; let i = index;">
+    <div>{{ question }}</div>
+    <input class="form-control"
+           type="text">
+  </div>
+  <button [disabled]="testForm.invalid" class="form-control btn btn-primary mt-2" type="submit">Submit</button>
+</form>
