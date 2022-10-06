@@ -14,10 +14,9 @@ class CustomerController extends Controller
             'name' => 'required',
             'email' => 'required|email',
             'birthday' => 'required|date',
-            'tel' => 'required|tel',
+            'tel' => 'required',
             'other' => 'nullable'
         ]);
-
         $id = DB::table('customers')->insertGetId($validated);
 
         return new JsonResponse(['message' => __('Successfully created customer!'),'customer_id' => $id]);
@@ -27,12 +26,12 @@ class CustomerController extends Controller
     {
         if(is_null($id))
         {
-            $customers = DB::select('select customer.*,links.test_id,links.test_type,links.stated_at,links.finished_at from customers
-                                            inner join links on links.customer_id = customer.id;');
+            $customers = DB::select('select customers.*,links.test_id,links.test_type,links.started_at,links.finished_at from customers
+                                            left join links on links.customer_id = customers.id;');
             return new JsonResponse(['data' => $customers]);
         }
-        $customers = DB::select('select customer.*,links.test_id,links.test_type,links.stated_at,links.finished_at from customers
-                                            inner join links on links.customer_id = customer.id
+        $customers = DB::select('select customers.*,links.test_id,links.test_type,links.started_at,links.finished_at from customers
+                                            left join links on links.customer_id = customers.id
                                             where customers.id = ?;',[$id]);
         if(!empty($customers))
             return new JsonResponse(['data' => $customers[0]]);
@@ -40,13 +39,13 @@ class CustomerController extends Controller
         return new JsonResponse(['message' => 'English test not found!'],404);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id) : JsonResponse
     {
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email',
             'birthday' => 'required|date',
-            'tel' => 'required|tel',
+            'tel' => 'required',
             'other' => 'nullable'
         ]);
 
@@ -55,7 +54,7 @@ class CustomerController extends Controller
             $request->input('email'),
             $request->input('birthday'),
             $request->input('tel'),
-            $request->input('other'),
+            $request->input('other') ?? '',
             $id
         ]);
 

@@ -3,10 +3,11 @@
 namespace Tests;
 
 use Laravel\Lumen\Testing\DatabaseMigrations;
+use Tests\Traits\AuthTrait;
 
 class AuthTest extends TestCase
 {
-    use DatabaseMigrations;
+    use DatabaseMigrations,AuthTrait;
 
     public function test_register_endpoint()
     {
@@ -21,16 +22,9 @@ class AuthTest extends TestCase
 
     public function test_login_endpoint()
     {
-        $response = $this->json('POST','/api/register',[
-            'name' => 'Teszt Elek',
-            'email' => 'teszt.elek@teszt.com',
-            'password' => 'password'
-        ]);
-        $token = $response->response->json()['confirm_token'];
-        $this->json('GET',"api/confirm/$token")
-            ->seeJsonStructure(['message'])->assertResponseOk();
+        $this->auth();
         $this->json('POST','/api/login',[
-            'email' => 'teszt.elek@teszt.com',
+            'email' => 'teszt@teszt.hu',
             'password' => 'password'
         ])->seeJsonStructure([
             'jwt'
